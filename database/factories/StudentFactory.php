@@ -26,7 +26,7 @@ class StudentFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'second_name' => $this->faker->lastName(),
             'age' => $this->faker->numberBetween($min = 7, $max = 20),
-            'speciality' => $this->faker->word,
+            'speciality' => ucwords($this->faker->word),
         ];
     }
 }

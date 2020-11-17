@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormStoreRequest;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -41,9 +42,11 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormStoreRequest $request)
     {
-        //
+        Student::create(['cne' => $request->cne, 'first_name' => $request->first_name, 'second_name' => $request->second_name, 'age' => $request->age, 'speciality' => $request->speciality]);
+
+        return redirect('/student');
     }
 
     /**
@@ -70,7 +73,12 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        $students = Student::all();
+        return view('student', [
+            'students' => $students,
+            'student' => $student,
+            'layout' => 'edit'
+        ]);
     }
 
     /**
@@ -82,7 +90,9 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $student->update(['cne' => $request->cne, 'first_name' => $request->first_name, 'second_name' => $request->second_name, 'age' => $request->age, 'speciality' => $request->speciality]);
+
+        return redirect('/student');
     }
 
     /**
@@ -93,6 +103,8 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $student->delete();
+
+        return redirect('/student');
     }
 }
